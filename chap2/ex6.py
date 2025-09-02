@@ -1,27 +1,65 @@
-def money_exchange():
-    # Get input from user
-    amount = int(input("Enter an amount of money (divisible by 1000): "))
+def readFourDigits(number):
+    # Special case for zero
+    if number == 0:
+        return 'zero'
     
-    # Validate input
-    if amount % 1000 != 0:
-        print("Error: Amount must be divisible by 1000")
-        return
+    # Define word mappings
+    ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+    teens = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 
+             'sixteen', 'seventeen', 'eighteen', 'nineteen']
+    tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety']
     
-    if amount <= 0:
-        print("Error: Amount must be positive")
-        return
+    result = []
     
-    # Calculate coins using greedy algorithm
-    coin_5000 = amount // 5000
-    remaining = amount % 5000
+    # Extract digits
+    thousands = number // 1000
+    hundreds = (number % 1000) // 100
+    remainder = number % 100
     
-    coin_2000 = remaining // 2000
-    remaining = remaining % 2000
+    # Handle thousands
+    if thousands > 0:
+        result.append(ones[thousands])
+        result.append('thousand')
     
-    coin_1000 = remaining // 1000
+    # Handle hundreds
+    if hundreds > 0:
+        result.append(ones[hundreds])
+        result.append('hundred')
     
-    # Display the result
-    print(f"{amount} = [ {coin_5000} ]*5000 + [ {coin_2000} ]*2000 + [ {coin_1000} ]*1000")
+    # Handle tens and ones
+    if remainder >= 20:
+        tens_digit = remainder // 10
+        ones_digit = remainder % 10
+        result.append(tens[tens_digit])
+        if ones_digit > 0:
+            result.append(ones[ones_digit])
+    elif remainder >= 10:
+        # Handle teens (10-19)
+        result.append(teens[remainder - 10])
+    elif remainder > 0:
+        # Handle single digits (1-9)
+        result.append(ones[remainder])
+    
+    # Join with 'and' where appropriate
+    final_result = []
+    i = 0
+    while i < len(result):
+        if i > 0 and (result[i-1] == 'thousand' or result[i-1] == 'hundred'):
+            final_result.append('and')
+        final_result.append(result[i])
+        i += 1
+    
+    return ' '.join(final_result)
 
-# Run the program
-money_exchange()
+# Test the function with the examples
+print("Testing readFourDigits function:")
+print(f"readFourDigits(4517): '{readFourDigits(4517)}'")
+print(f"readFourDigits(9872): '{readFourDigits(9872)}'")
+print(f"readFourDigits(5000): '{readFourDigits(5000)}'")
+print(f"readFourDigits(3003): '{readFourDigits(3003)}'")
+
+# Additional test cases
+print(f"readFourDigits(1234): '{readFourDigits(1234)}'")
+print(f"readFourDigits(0): '{readFourDigits(0)}'")
+print(f"readFourDigits(15): '{readFourDigits(15)}'")
+print(f"readFourDigits(100): '{readFourDigits(100)}'")
