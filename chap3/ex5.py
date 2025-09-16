@@ -32,6 +32,7 @@ def sentinelInput():
         return 0
 
 # Test function (uncomment to run)
+# update at repo
 result = sentinelInput()
 print(f"Average: {result}")
 
