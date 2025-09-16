@@ -8,6 +8,6 @@ money %= 5000
 twothousand = money // 2000
 money %= 2000
 
-# Tính số tờ 1000
+# Tính số tờ 1000 (update repo master)
 oneThousand = money // 1000
 print(temp, "= [",fiveThousand,"]*5000", "+ [", twothousand, "]*2000", "+ [", oneThousand, "]*1000")
