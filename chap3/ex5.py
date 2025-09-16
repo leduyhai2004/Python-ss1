@@ -24,6 +24,7 @@ def sentinelInput():
             count += 1
     
     # Tính và trả về trung bình
+    #
     if count > 0:
         average = total / count
         return round(average, 2)
